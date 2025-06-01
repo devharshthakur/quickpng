@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum UploadStatus {
+  UPLOADED
+  PROCESSING
+  CONVERTED
+  FAILED
+  ARCHIVED
+}
+
+model FileUpload {
+  id           String       @id @default(uuid())
+  originalName String
+  fileName     String       @unique
+  path         String       @unique
+  mimeType     String
+  size         Int
+  status       UploadStatus @default(UPLOADED)
+  uploadedAt   DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
