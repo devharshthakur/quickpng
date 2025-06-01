@@ -5,6 +5,7 @@ import { UploadController } from './upload.controller';
 import { SvgValidationPipe } from './pipes/svg-validation.pipe';
 import { memoryStorage } from 'multer';
 import { FILE_CONSTRAINTS } from '../conversion/constants/values.constants';
+import { DbModule } from '../db/db.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { FILE_CONSTRAINTS } from '../conversion/constants/values.constants';
         fileSize: FILE_CONSTRAINTS.MAX_FILE_SIZE,
       },
     }),
+    DbModule,
   ],
   providers: [UploadService, SvgValidationPipe],
   exports: [UploadService],

@@ -16,7 +16,7 @@ enum UploadStatus {
   ARCHIVED
 }
 
-model FileUpload {
+model UploadedFileInfo {
   id           String       @id @default(uuid())
   originalName String
   fileName     String       @unique

@@ -3,5 +3,6 @@ import { ConversionService } from './conversion.service';
 
 @Module({
   providers: [ConversionService],
+  exports: [ConversionService],
 })
 export class ConversionModule {}

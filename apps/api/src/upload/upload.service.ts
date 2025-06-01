@@ -21,7 +21,7 @@ export interface SavedFileInfoType {
 
 @Injectable()
 export class UploadService {
-  private readonly uploadPath: string = join(__dirname, '..', '..', 'uploads');
+  private readonly uploadPath: string = join(__dirname, '..', '..', 'uploads', 'svgs');
   private logger = new Logger();
   constructor() {
     this.ensureUploadDirExists();
@@ -38,6 +38,15 @@ export class UploadService {
     }
   }
 
+  /**
+   * Generates a unique filename by sanitizing the original filename and adding a UUID suffix
+   *
+   * Sanitization rules:
+   * - Removes all characters except alphanumeric, underscore, period, and hyphen
+   * - Replaces invalid characters with underscore
+   * - Preserves file extension
+   * - Adds first segment of UUID as suffix for uniqueness
+   */
   private generateUniqueFilename(originalname: string): string {
     const parsedPath = {
       name: originalname.substring(0, originalname.lastIndexOf('.')) || originalname,

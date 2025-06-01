@@ -2,23 +2,18 @@ import { Controller, Logger, Post, UploadedFile, UseInterceptors, UsePipes } fro
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService, SavedFileInfoType, UploadFileType } from './upload.service';
 import { SvgValidationPipe } from './pipes/svg-validation.pipe';
-
-interface UploadResponse {
-  filename: string;
-  uploadedFilename: string;
-  filePath?: string;
-}
+import { DbService } from 'src/db/db.service';
 
 @Controller('upload')
 export class UploadController {
-  constructor(private readonly uploadService: UploadService) {}
+  constructor(private readonly uploadService: UploadService,private readonly dbService:DbService) {}
 
   private logger = new Logger(UploadController.name);
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   @UsePipes(SvgValidationPipe)
-  async uploadSvg(@UploadedFile() file: Express.Multer.File): Promise<UploadResponse> {
+  async uploadSvg(@UploadedFile() file: Express.Multer.File) {
     const uploadedFile: UploadFileType = {
       fieldname: file.fieldname,
       originalname: file.originalname,
@@ -27,14 +22,8 @@ export class UploadController {
       size: file.size,
     };
 
-    const savedFile: SavedFileInfoType = await this.uploadService.saveFile(uploadedFile);
-
-    const uploadedFileDetails: UploadResponse = {
-      filename: savedFile.filename,
-      uploadedFilename: savedFile.originalname,
-      filePath: savedFile.path,
-    };
-
-    return uploadedFileDetails;
+    const savedFileInfo: SavedFileInfoType = await this.uploadService.saveFile(uploadedFile);
+    this.dbService.addFileInfo(savedFileInfo);
+    return savedFileInfo;
   }
 }
