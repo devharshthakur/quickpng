@@ -1,11 +1,16 @@
 export type FileStatus = 'PENDING' | 'CONVERTING' | 'COMPLETED' | 'FAILED';
-
+export type IndivisualUrlType = {
+  id: string;
+  name: string;
+  url: string;
+  size: number;
+};
 export interface FileMetaData {
   readonly id: string;
   readonly name: string;
   readonly size: number;
   readonly mimeType: string;
-  readonly lastModified: number;
+  lastModified: number;
   status: FileStatus;
   readonly dimensions?: {
     width: number;
@@ -24,21 +29,10 @@ export interface ProcessedFile {
 
 export interface ConversionResult {
   readonly downloadUrl: string;
-  readonly individualUrls?: ReadonlyArray<{
-    id: string;
-    name: string;
-    url: string;
-    size: number;
-  }>;
+  readonly individualUrls?: ReadonlyArray<IndivisualUrlType>;
+  readonly isZip: boolean;
   readonly zipSize?: number;
   readonly conversionTime: number;
   readonly fileCount: number;
   readonly failedCount?: number;
-}
-
-export interface ConversionError {
-  readonly code: string;
-  readonly message: string;
-  readonly details?: Record<string, unknown>;
-  readonly timestamp: Date;
 }

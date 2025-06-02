@@ -7,7 +7,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\" && prisma format",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --skip-generate",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "prisma migrate deploy",
+    "studio": "prisma studio"
   },
   "exports": {
     ".": "./dist/index.js"

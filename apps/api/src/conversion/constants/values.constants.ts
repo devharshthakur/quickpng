@@ -20,12 +20,13 @@ export const DEFAULT_CONVERSION_CONFIG: ConversionConfig = {
 } as const;
 
 export const FILE_CONSTRAINTS = {
-  MAX_FILE_SIZE: 10 * 1024 * 1024,
-  MAX_FILES_PER_REQUEST: 50,
-  ZIP_THRESHOLD: 3,
+  MAX_FILE_SIZE: (10 * 1024 * 1024) as number, // 10MB
+  MAX_FILES_PER_REQUEST: 50 as number,
+  ZIP_THRESHOLD: 3 as number,
   SUPPORTED_MIME_TYPES: ['image/svg+xml'] as const,
   SUPPORTED_EXTENSIONS: ['.svg'] as const,
 } as const;
 
 export type SupportedMimeType = (typeof FILE_CONSTRAINTS.SUPPORTED_MIME_TYPES)[number];
 export type SupportedExtension = (typeof FILE_CONSTRAINTS.SUPPORTED_EXTENSIONS)[number];
+export type FileConstraints = typeof FILE_CONSTRAINTS;

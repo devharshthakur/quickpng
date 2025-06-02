@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"**/*.md\" \"**/*.json\" \"**/*.js\" \"**/*.mjs\" \"**/*.ts\"",
     "dev": "nest start --watch",
     "debug": "nest start --debug --watch",
     "start": "node dist/main",
@@ -21,7 +21,9 @@
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/serve-static": "^5.0.3",
     "@workspace/db": "workspace:*",
+    "fast-xml-parser": "^5.2.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "sharp": "^0.34.2",

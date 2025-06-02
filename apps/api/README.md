@@ -1,98 +1,81 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 QuickPNG Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Welcome to the **QuickPNG Backend**! This is responsible for handling SVG uploads, conversion to PNG, and file management. Built with [NestJS](https://nestjs.com/) and TypeScript for scalability and maintainability.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🗂️ Project Structure
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ pnpm install
+```
+apps/api/
+├── src/
+│   ├── app.controller.ts      # Root controller
+│   ├── app.module.ts          # Main NestJS module
+│   ├── app.service.ts         # Root service
+│   ├── conversion/            # SVG to PNG conversion logic
+│   ├── db/                    # Database integration (Prisma)
+│   ├── upload/                # File upload, validation, and cleanup
+│   └── main.ts                # Application entry point
+├── uploads/                   # Uploaded SVG files (temp)
+├── uploads/images/            # Converted PNG files
+├── test/                      # E2E and unit tests
+├── package.json               # Project scripts and dependencies
+└── README.md                  # This file
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ pnpm run start
+## ⚙️ How It Works
 
-# watch mode
-$ pnpm run start:dev
+1. **Upload SVG**: Users upload SVG files via the `/upload` endpoint.
+2. **Validation**: Uploaded files are validated for type, size, and content.
+3. **Save & Store**: SVGs are saved temporarily, and metadata is stored in the database.
+4. **Dimension Extraction**: The backend reads/fetches the SVG's width and height (or falls back to `viewBox` or defaults).
+5. **Conversion**: SVGs are converted to PNG using [sharp](https://sharp.pixelplumbing.com/), with the correct dimensions.
+6. **Cleanup**: The original SVG is deleted after conversion.
+7. **Download**: The PNG is made available for download from `/uploads/images/`.
 
-# production mode
-$ pnpm run start:prod
-```
+---
 
-## Run tests
+## 🏗️ Tech Stack
 
-```bash
-# unit tests
-$ pnpm run test
+- **Framework**: [NestJS](https://nestjs.com/) (TypeScript)
+- **Image Processing**: [sharp](https://sharp.pixelplumbing.com/)
+- **Database**: [Prisma ORM](https://www.prisma.io/)
+- **Validation**: [zod](https://zod.dev/)
+- **XML Parsing**: [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser)
 
-# e2e tests
-$ pnpm run test:e2e
+---
 
-# test coverage
-$ pnpm run test:cov
-```
+## 🧑‍💻 Contributing
 
-## Deployment
+We welcome contributions! Here's how you can help:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+1. **Fork the repo** and clone it locally.
+2. **Install dependencies**:
+   ```sh
+   pnpm install
+   ```
+3. **Run the backend locally**:
+   ```sh
+   pnpm run dev
+   ```
+4. **Test your changes**:
+   ```sh
+   pnpm run test
+   ```
+5. **Submit a pull request** with a clear description of your changes.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Coding Guidelines
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
+- Use TypeScript and keep the codebase type-safe (avoid `any` unless necessary).
+- Follow the existing folder structure and naming conventions.
+- Write clear, concise commit messages.
+- Add or update tests for new features or bug fixes.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Useful Scripts
 
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `pnpm  dev` – Start the server in watch mode
+- `pnpm  test` – Run all tests
+- `pnpm  format` – Format code with Prettier
+- `pnpm  lint` – Lint the codebase

@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { UploadModule } from './upload/upload.module';
 import { DbModule } from './db/db.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -15,6 +17,10 @@ import { DbModule } from './db/db.module';
     }),
     UploadModule,
     DbModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads', 'images'),
+      serveRoot: '/uploads/images',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

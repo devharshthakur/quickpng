@@ -6,6 +6,7 @@ import { SvgValidationPipe } from './pipes/svg-validation.pipe';
 import { memoryStorage } from 'multer';
 import { FILE_CONSTRAINTS } from '../conversion/constants/values.constants';
 import { DbModule } from '../db/db.module';
+import { ConversionModule } from 'src/conversion/conversion.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DbModule } from '../db/db.module';
       },
     }),
     DbModule,
+    ConversionModule,
   ],
   providers: [UploadService, SvgValidationPipe],
   exports: [UploadService],

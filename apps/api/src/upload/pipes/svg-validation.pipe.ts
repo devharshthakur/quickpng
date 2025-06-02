@@ -1,17 +1,18 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
-import { FILE_CONSTRAINTS } from '../../conversion/constants/values.constants';
+import { FILE_CONSTRAINTS, SupportedExtension, SupportedMimeType } from '../../conversion/constants/values.constants';
+import { UploadFileType } from '../upload.service';
 
 @Injectable()
 export class SvgValidationPipe implements PipeTransform {
-  transform(file: Express.Multer.File): Express.Multer.File {
+  transform(file: UploadFileType): UploadFileType {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
-    const fileExtension = file.originalname.split('.').pop()?.toLowerCase();
-    if (!fileExtension || !FILE_CONSTRAINTS.SUPPORTED_EXTENSIONS.includes(`.${fileExtension}` as any)) {
+    const fileExtension = ('.' + file.originalname.split('.').pop()?.toLowerCase()) as SupportedExtension;
+    if (!FILE_CONSTRAINTS.SUPPORTED_EXTENSIONS.includes(fileExtension)) {
       throw new BadRequestException(`Invalid file extension. Supported extensions: ${FILE_CONSTRAINTS.SUPPORTED_EXTENSIONS.join(', ')}`);
     }
-    if (!FILE_CONSTRAINTS.SUPPORTED_MIME_TYPES.includes(file.mimetype as any)) {
+    if (!FILE_CONSTRAINTS.SUPPORTED_MIME_TYPES.includes(file.mimetype as SupportedMimeType)) {
       throw new BadRequestException(`Invalid file type. Supported types: ${FILE_CONSTRAINTS.SUPPORTED_MIME_TYPES.join(', ')}`);
     }
     if (file.size > FILE_CONSTRAINTS.MAX_FILE_SIZE) {
