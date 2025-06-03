@@ -63,14 +63,5 @@ We love contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md)
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. [🐛 Report Issues](https://github.com/devharshthakur/quickpng/issues) 
 
----
-
-<div align="center">
-
-**Made with ❤️ for the design and development community**
-
-[🌐 Try QuickPNG Now](#) | [🐛 Report Issues](https://github.com/devharshthakur/quickpng/issues) | [💬 Discussions](https://github.com/devharshthakur/quickpng/discussions)
-
-</div>
